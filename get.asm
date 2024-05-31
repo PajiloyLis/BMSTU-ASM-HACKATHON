@@ -2,13 +2,8 @@
 
 .stack 100h
 
-.data
-; тестовая структура
-Struct struct
-	length dw 256
-    array db 256 dup(?)
-Struct ends
-pointer_struct Struct <>
+;.data
+;	vector_test vector <5, 0, 1, 2, 3, 4>
 
 .code
 ; Получить значение байта из массива (Часть 1)
@@ -27,13 +22,16 @@ get proc
 	cmp cx, ax
 	jae err_exit
 	; bl = arr[cx]
-	add si, cx
+	add si, 2
+	mov ax, [si]
+	add ax, cx
+	mov si, ax
 	mov bl, [si]
 	success_exit:
 		xor ax, ax
 		jmp exit
 	err_exit:
-		mov ax, 1
+		mov ax, 30;INDEX_OUT_OF_RANGE
 	exit:
 		ret
 get endp
@@ -41,13 +39,13 @@ get endp
 main:
 	mov ax, @data
     mov ds, ax
-    mov dx, offset pointer_struct
-    ; cx = 5 (пример)
-    mov cx, 5
+    ;mov dx, offset vector_test
+    ; cx = 3 (пример)
+    ;mov cx, 3
     ; Вызов функции получения значения байта из массива
-    call get
+    ;call get
     ; Обработка результата (ax = 0 - успех, 1 - ошибка)
 	; в разработке
-    mov ah, 4C00h
+    mov ah, 4Ch
     int 21h
 end main
