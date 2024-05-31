@@ -1,4 +1,6 @@
 *.exe
+*.EXE
+*.OBJ
 *.out
 *.o
 *.pch
