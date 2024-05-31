@@ -2,8 +2,10 @@
 
 .stack 100h
 
-;.data
-;	vector_test vector <5, 0, 1, 2, 3, 4>
+.data
+	; Пример данных вектора
+    ;vec_data dw 5, 0, 1, 2, 3, 4
+    ;vector_test vector <5, offset vec_data + 2>
 
 .code
 ; Получить значение байта из массива (Часть 1)
@@ -39,13 +41,23 @@ get endp
 main:
 	mov ax, @data
     mov ds, ax
+	
     ;mov dx, offset vector_test
     ; cx = 3 (пример)
-    ;mov cx, 3
+    mov cx, 3
+
     ; Вызов функции получения значения байта из массива
-    ;call get
-    ; Обработка результата (ax = 0 - успех, 1 - ошибка)
-	; в разработке
+    call get
+
+    ; Вывод результата (ax = 0 - успех, 1 - ошибка)
+	mov ah, 02h
+	mov dl, bl
+	int 12h
+	
+	mov dl, al
+	add al, '0'
+	int 21h
+
     mov ah, 4Ch
     int 21h
 end main
