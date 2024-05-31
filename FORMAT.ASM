@@ -1,7 +1,7 @@
 .model small
 .stack 100h
 
-public set
+public format
 
 extrn EXIT_SUCCESS: abs
 extrn INDEX_OUT_OF_RANGE: abs
@@ -15,37 +15,65 @@ extrn INDEX_OUT_OF_RANGE: abs
 ; 4 – вывод ASCII код символа
 
 .code
-first proc 
-    mov cx,
-    a:
-
-    ret
-first endp
-
-second proc 
-
-    ret
-second endp
-
-third proc 
-
-    ret
-third endp
-
-fourth proc 
-
-    ret
-fourth endp
 
 format proc uses dx
     mov si, dx
-    cmp bx, 1
+    mov ax, bx
+    mov cx, [si]
+    mov bx, [si + 2]
+
+    cmp ax, 1
     je first
-    cmp bx, 2
+    cmp ax, 2
     je second
-    cmp bx, 3
+    cmp ax, 3
     je third
-    cmp bx, 4
+    cmp ax, 4
     je fourth
-    ret   
-set endp
+
+    the_end:
+        ret   
+
+first: 
+    a:
+        mov ah, 02h
+        to_hex_digit:
+            add dl,'0'              
+            cmp dl,'9'  
+        int 21h           
+        jle fin             
+        add dl,7     
+        int 21h          
+    fin:
+        add dl, " "    
+        int 21h   
+        loop a
+    jmp the_end
+
+second: 
+    b2:
+        mov ah, 02h
+        mov dl, "y"
+        int 21h
+    loop b2
+    jmp the_end
+
+third: 
+    run:
+        mov ah, 02h
+        mov dl, "x"
+        int 21h
+    loop run
+    jmp the_end
+
+fourth: 
+    d:
+        mov ah, 02h
+        mov dl, "z"
+        int 21h
+    loop d
+
+    jmp the_end
+
+format endp
+end
