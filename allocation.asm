@@ -1,3 +1,11 @@
+;Выделить динамическую память с помощью int 21h, заполнить поля
+;структуры.
+;Аргументы:
+;ds:dx – сегмент и смещение до структуры
+;cx – количество выделяемых байт
+;Результат:
+;ax – результат выполнения функции
+
 .model small
 
 public alloc_mem
@@ -8,7 +16,7 @@ extrn EXIT_SUCCESS:ABS
 extrn ALLOCATION_ERROR:ABS
 
 .code
-alloc_mem proc uses dx bx ax cx si di
+alloc_mem proc uses dx bx cx si di
 
     mov bx, dx
     xor dx, dx
