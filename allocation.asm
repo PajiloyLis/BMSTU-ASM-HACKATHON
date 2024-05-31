@@ -8,7 +8,7 @@ extrn EXIT_SUCCESS:ABS
 extrn ALLOCATION_ERROR:ABS
 
 .code
-alloc_mem proc
+alloc_mem proc uses dx bx ax cx si di
 
     mov bx, dx
     xor dx, dx
