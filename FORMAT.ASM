@@ -19,7 +19,7 @@ extrn INDEX_OUT_OF_RANGE: abs
 format proc uses dx
     mov si, dx
     mov ax, bx
-    mov cx, [si]
+    xor cx, cx
     mov bx, [si + 2]
 
     cmp ax, 1
@@ -35,45 +35,52 @@ format proc uses dx
         ret   
 
 first: 
-    a:
+    b1:
         mov ah, 02h
-        to_hex_digit:
-            add dl,'0'              
-            cmp dl,'9'  
-        int 21h           
-        jle fin             
-        add dl,7     
-        int 21h          
-    fin:
-        add dl, " "    
-        int 21h   
-        loop a
+        mov bx, cx
+        mov dl, es:[bx]
+        mov al, dl
+
+        int 21h
+        inc cx
+    cmp [si], cx
+    ja b1
     jmp the_end
 
 second: 
     b2:
         mov ah, 02h
-        mov dl, "y"
+        mov bx, cx
+        mov dl, es:[bx]
+        mov al, dl
+        
         int 21h
-    loop b2
+        inc cx
+    cmp [si], cx
+    ja b2
     jmp the_end
 
 third: 
-    run:
+    b3:
         mov ah, 02h
-        mov dl, "x"
+        mov bx, cx
+        mov dl, es:[bx]
         int 21h
-    loop run
+        inc cx
+    cmp [si], cx
+    ja b3
     jmp the_end
 
 fourth: 
-    d:
+    b4:
         mov ah, 02h
-        mov dl, "z"
+        mov bx, cx
+        mov dl, es:[bx]
         int 21h
-    loop d
-
+        inc cx
+    cmp [si], cx
+    ja b4
     jmp the_end
-
 format endp
+
 end
