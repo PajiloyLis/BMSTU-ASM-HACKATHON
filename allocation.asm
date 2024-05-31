@@ -1,7 +1,12 @@
 .model small
 
+.stack 100h
+
+extrn EXIT_SUCCESS:ABS
+extrn ALLOCATION_ERROR:ABS
+
 .code
-proc alloc_mem
+alloc_mem proc
 
     mov bx, dx
     xor dx, dx
@@ -27,12 +32,12 @@ proc alloc_mem
     mov ds:[di + 2h], ax
 
     epic_success:
-        xor ax, ax
+        mov ax, EXIT_SUCCESS
         ret
 
     epic_fail:
-        mov ax, 1h
+        mov ax, ALLOCATION_ERROR
         ret
     
-
 alloc_mem endp
+END
