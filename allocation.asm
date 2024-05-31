@@ -15,17 +15,16 @@ proc alloc_mem
     test dx, dx
     jz skip
     inc ax
-    
     skip:
-    mov dx, bx
+    mov di, bx
     mov bx, ax
     
     mov ah, 48h
     int 21h
     jc epic_fail
     
-    mov ds:dx, si
-    mov ds:[dx + 2], ax
+    mov ds:[di], si
+    mov ds:[di + 2h], ax
 
     epic_success:
         xor ax, ax
