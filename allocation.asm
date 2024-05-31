@@ -1,5 +1,7 @@
 .model small
 
+public alloc_mem
+
 .stack 100h
 
 extrn EXIT_SUCCESS:ABS
