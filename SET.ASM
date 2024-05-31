@@ -2,7 +2,6 @@
 .stack 100h
 
 public set
-public get
 
 extrn EXIT_SUCCESS: abs
 extrn INDEX_OUT_OF_RANGE: abs
