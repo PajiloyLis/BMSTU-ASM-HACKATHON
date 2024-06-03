@@ -25,12 +25,15 @@ normal_index_case_1 proc near uses ax bx cx dx
 
     mov dx, offset test_1
     mov cx, 10
+    call alloc_mem
     cmp ax, EXIT_SUCCESS
     je allocated
     call allocation_error_print
     ret
 allocated:
-    mov [test_1.arr+test_normal_index], test_value
+    mov bp, test_1.arr
+    add bp, test_normal_index
+    mov [bp], byte ptr  test_value
     mov dx, offset test_1
     mov cx, test_normal_index
     call get
@@ -39,7 +42,7 @@ allocated:
     call return_code_error_print
     ret
 codes_equal:
-    cmp bl, test_value
+    cmp bl, byte ptr test_value
     je values_equal
     call value_error_print
     ret

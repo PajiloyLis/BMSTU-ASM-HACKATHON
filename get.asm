@@ -23,11 +23,10 @@ get proc uses dx
   ; bl = arr[cx]
     mov ax, [si + 2]
 
-    mov es, ax
+    mov si, ax
 
-    mov al, bl
     mov bx, cx
-    mov bl, es:[bx]
+    mov bl, [si+bx]
   success_exit:
     mov ax, EXIT_SUCCESS
     jmp exit
