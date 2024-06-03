@@ -4,8 +4,7 @@
 
 public format
 
-extrn EXIT_SUCCESS: abs
-extrn INDEX_OUT_OF_RANGE: abs
+include BASE_STR.inc
 
 ; Аргументы:
 ; ds:dx – сегмент и смещение до структуры
