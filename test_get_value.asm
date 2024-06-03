@@ -59,8 +59,8 @@ codes_equal:
 values_equal:
     call success_print
 test_end:
-    mov dx, offset test_1
-    call free_mem
+    ; mov dx, offset test_1
+    ; call free_mem
     ret
 normal_index_case_1 endp
 
@@ -95,8 +95,8 @@ codes_equal:
 values_equal:
     call success_print
 test_end:
-    ; mov dx, offset test_1
-    ; call free_mem
+    mov dx, offset test_2
+    call free_mem
     ret
 zero_index_case_2 endp
 
@@ -131,8 +131,8 @@ codes_equal:
 values_equal:
     call success_print
 test_end:
-    ; mov dx, offset test_1
-    ; call free_mem
+    mov dx, offset test_3
+    call free_mem
     ret
 max_index_case_3 endp
 
@@ -162,8 +162,8 @@ allocated:
 codes_equal:
     call success_print
 test_end:
-    ; mov dx, offset test_1
-    ; call free_mem
+    mov dx, offset test_4
+    call free_mem
     ret
 outer_right_index_case_4 endp
 
@@ -193,8 +193,8 @@ allocated:
 codes_equal:
     call success_print
 test_end:
-    ; mov dx, offset test_1
-    ; call free_mem
+    mov dx, offset test_5
+    call free_mem
     ret
 outer_left_index_case_5 endp
 

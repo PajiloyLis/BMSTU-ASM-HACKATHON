@@ -35,12 +35,12 @@ free_mem proc uses dx bx es cx
 
     jc epic_fail
 
-    epic_fail:
-    mov ax, FREE_ERROR
-    ret
-
     epic_success:
     mov ax, EXIT_SUCCESS
+    ret
+
+    epic_fail:
+    mov ax, FREE_ERROR
     ret
 
 free_mem endp
