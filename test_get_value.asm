@@ -87,6 +87,39 @@ values_equal:
     ret
 zero_index_case_2 endp
 
+max_index_case_3 proc near uses ax bx cx dx
+    xor cx, cx
+    mov cl, '3'
+    call introduction_print
+
+    mov dx, offset test_1
+    mov cx, test_size
+    call alloc_mem
+    cmp ax, EXIT_SUCCESS
+    je allocated
+    call allocation_error_print
+    ret
+allocated:
+    mov bp, test_1.arr
+    add bp, test_max_index
+    mov [bp], byte ptr  test_value
+    mov dx, offset test_1
+    mov cx, test_max_index
+    call get
+    cmp ax, EXIT_SUCCESS
+    je codes_equal
+    call return_code_error_print
+    ret
+codes_equal:
+    cmp bl, byte ptr test_value
+    je values_equal
+    call value_error_print
+    ret
+values_equal:
+    call success_print
+    ret
+max_index_case_3 endp
+
 
 introduction_print proc near uses ax dx cx
     mov ah, 09h
@@ -146,6 +179,8 @@ success_print endp
 
 .startup
     call normal_index_case_1
+    call zero_index_case_2
+    call max_index_case_3
     mov ah, 4Ch
     int 21h
 end
