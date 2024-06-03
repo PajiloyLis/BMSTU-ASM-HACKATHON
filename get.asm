@@ -1,3 +1,9 @@
+.model small
+
+public get
+
+include BASE_STR.inc
+
 .code
 ; Получить значение байта из массива (Часть 1)
 ; Аргументы:
@@ -11,11 +17,11 @@
 get proc uses dx
   ; check cx < len(arr)
     mov si, dx
-  mov ax, [si]
-  cmp cx, ax
-  jae err_exit
+    mov ax, [si]
+    cmp cx, ax
+    jae err_exit
   ; bl = arr[cx]
-      mov ax, [si + 2]
+    mov ax, [si + 2]
 
     mov es, ax
 
@@ -30,3 +36,4 @@ get proc uses dx
   exit:
     ret
 get endp
+end

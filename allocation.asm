@@ -12,8 +12,7 @@ public alloc_mem
 
 .stack 100h
 
-extrn EXIT_SUCCESS:ABS
-extrn ALLOCATION_ERROR:ABS
+include BASE_STR.inc
 
 .code
 alloc_mem proc uses dx bx cx si di
