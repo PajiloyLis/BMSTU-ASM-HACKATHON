@@ -3,8 +3,7 @@
 
 public set
 
-extrn EXIT_SUCCESS: abs
-extrn INDEX_OUT_OF_RANGE: abs
+include BASE_STR.inc
 
 ; Аргументы:
 ; ds:dx – сегмент и смещение до структуры
@@ -22,11 +21,11 @@ set proc uses dx
 
     mov ax, [si + 2]
 
-    mov es, ax
+    mov si, ax
 
     mov al, bl
     mov bx, cx
-    mov es:[bx], al
+    mov [si+bx], al
 
     ok:
         mov ax, EXIT_SUCCESS
@@ -39,3 +38,4 @@ set proc uses dx
     exit:
         ret   
 set endp
+end
