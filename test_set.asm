@@ -36,6 +36,9 @@ outer_left_index = -1
     test_5 vector <>
 
 .code
+;/**
+; * @brief Тестирует установку значения по нормальному индексу (3)
+; */
 set_normal_index_case_1 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '1'
@@ -73,6 +76,9 @@ test_end:
     ret
 set_normal_index_case_1 endp
 
+;/**
+; * @brief Тестирует установку значения по нулевому индексу (0)
+; */
 set_zero_index_case_2 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '2'
@@ -110,6 +116,9 @@ test_end:
     ret
 set_zero_index_case_2 endp
 
+;/**
+; * @brief Тестирует установку значения по максимальному индексу (9)
+; */
 set_max_index_case_3 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '3'
@@ -147,6 +156,9 @@ test_end:
     ret
 set_max_index_case_3 endp
 
+;/**
+; * @brief Тестирует установку значения по индексу вне правого диапазона (10)
+; */
 set_outer_right_index_case_4 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '4'
@@ -176,6 +188,9 @@ test_end:
     ret
 set_outer_right_index_case_4 endp
 
+;/**
+; * @brief Тестирует установку значения по индексу вне левого диапазона (-1)
+; */
 set_outer_left_index_case_5 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '5'
@@ -205,6 +220,9 @@ test_end:
     ret
 set_outer_left_index_case_5 endp
 
+;/**
+; * @brief Выполняет все тесты для функции set
+; */
 test_set_feature proc
     call set_normal_index_case_1
     call set_zero_index_case_2

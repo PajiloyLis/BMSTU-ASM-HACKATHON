@@ -36,6 +36,9 @@ outer_left_index = -1
     test_5 vector <>
 
 .code
+;/**
+; * @brief Тестирует получение значения по нормальному индексу (3)
+; */
 normal_index_case_1 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '1'
@@ -72,6 +75,9 @@ test_end:
     ret
 normal_index_case_1 endp
 
+;/**
+; * @brief Тестирует получение значения по нулевому индексу (0)
+; */
 zero_index_case_2 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '2'
@@ -108,6 +114,9 @@ test_end:
     ret
 zero_index_case_2 endp
 
+;/**
+; * @brief Тестирует получение значения по максимальному индексу (9)
+; */
 max_index_case_3 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '3'
@@ -144,6 +153,9 @@ test_end:
     ret
 max_index_case_3 endp
 
+;/**
+; * @brief Тестирует получение значения по индексу вне правого диапазона (10)
+; */
 outer_right_index_case_4 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '4'
@@ -175,6 +187,9 @@ test_end:
     ret
 outer_right_index_case_4 endp
 
+;/**
+; * @brief Тестирует получение значения по индексу вне левого диапазона (-1)
+; */
 outer_left_index_case_5 proc near uses ax bx cx dx
     xor cx, cx
     mov cl, '5'
@@ -206,6 +221,9 @@ test_end:
     ret
 outer_left_index_case_5 endp
 
+;/**
+; * @brief все тесты для функции get
+; */
 test_get_feature proc
     call normal_index_case_1
     call zero_index_case_2

@@ -1,6 +1,11 @@
+;/**
+; * @file
+; * @brief Точка входа запуска модульных тестов
+; */
+
 .model small
 
-.stack 200h
+.stack 300h
 
 extrn test_format_feature: near
 extrn test_get_feature: near

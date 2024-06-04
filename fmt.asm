@@ -1,5 +1,4 @@
 .model small
-.stack 100h
 
 include BASE_STR.inc
 
@@ -38,7 +37,9 @@ format proc uses ax cx di si dx
         popf
         ret   
 
-; 1 – выводит каждый байт в шестнадцатеричном формате.
+;/**
+; * @brief ; bx - 1 – выводит каждый байт в шестнадцатеричном формате.
+; */
 first: 
     b1:
         mov ah, 02h
@@ -65,7 +66,10 @@ first:
         ja b1
     jmp the_end
 
-; 2 – выводит каждый байт в двоичном формате.
+;/**
+; * @brief ; bx - 2 выводит каждый байт в двоичном формате.
+; */
+
 second: 
     b2:
         mov bx, cx
@@ -94,7 +98,9 @@ second:
         ja b2
     jmp the_end
 
-; 3 – выводит байты как ASCII символы
+;/**
+; * @brief ; bx - 3 – выводит байты как ASCII символы
+; */
 third: 
     b3:
         mov dx, di
@@ -110,7 +116,9 @@ third:
         ja b3
     jmp the_end
 
-; 4 – вывод ASCII код (значения байта)
+;/**
+; * @brief ; bx - 4 – вывод ASCII код (значения байта)
+; */
 fourth: 
     b4:
         mov ah, 02h

@@ -1,3 +1,8 @@
+;/**
+; * @file
+; * @brief Модуль c функциями оформления модульных тестов
+; */
+
 .model small
 
 public introduction_print

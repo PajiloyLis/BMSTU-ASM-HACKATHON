@@ -40,6 +40,9 @@ test_size = 5
     test_1 vector <>
 
 .code
+;/**
+; * @brief Тестирует вывод в ASCII формате
+; */
 ascii_print proc near uses ax bx cx dx si 
     pushf
     mov ax, @data
@@ -74,6 +77,9 @@ alloc_error:
 
 ascii_print endp
 
+;/**
+; * @brief Тестирует вывод в формате ASCII кодов
+; */
 ascii_code_print proc near uses ax bx cx dx si 
     pushf
     mov ax, @data
@@ -107,6 +113,9 @@ alloc_error:
     ret
 ascii_code_print endp
 
+;/**
+; * @brief Тестирует вывод в шестнадцатеричном формате
+; */
 hex_print proc near uses ax bx cx dx si 
     pushf
     mov ax, @data
@@ -138,6 +147,9 @@ alloc_error:
     ret
 hex_print endp
 
+;/**
+; * @brief Тестирует вывод в двоичном формате
+; */
 bin_print proc near uses ax bx cx dx si 
     pushf
     mov ax, @data
@@ -171,6 +183,9 @@ alloc_error:
     ret
 bin_print endp
 
+;/**
+; * @brief Тестирует некорректный код формата
+; */
 bad_code proc near uses ax bx cx dx si 
     pushf
     mov ax, @data
