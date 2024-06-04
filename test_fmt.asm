@@ -40,6 +40,8 @@ test_size = 5
 
 .code
 ascii_print proc near uses ax bx cx dx si 
+    mov ax, @data
+    mov ds, ax
     xor cx, cx
     mov cl, '1'
     call introduction_print
@@ -50,11 +52,11 @@ ascii_print proc near uses ax bx cx dx si
 
     call fill_memory
 
-    call install
+    ;call install
     mov dx, offset test_1
     mov bx, 3
     call format
-    call del
+    ;call del
 
     lea si, expected_output_ascii
     call perform_test 
@@ -100,11 +102,11 @@ hex_print proc near uses ax bx cx dx
 
     call fill_memory
 
-    call install
+    ; call install
     mov dx, offset test_1
     mov bx, 1
     call format
-    call del
+    ; call del
 
     lea si, expected_output_hex
     call perform_test 
@@ -125,11 +127,11 @@ bin_print proc near uses ax bx cx dx
 
     call fill_memory
 
-    call install
+    ; call install
     mov dx, offset test_1
     mov bx, 2
     call format
-    call del
+    ; call del
 
     lea si, expected_output_bin
     call perform_test 
@@ -141,6 +143,8 @@ bin_print endp
 
 
 bad_code proc near uses ax bx cx dx
+    mov ax, @data
+    mov ds, ax
     xor cx, cx
     mov cl, '5'
     call introduction_print
@@ -214,16 +218,13 @@ test_end:
 perform_test endp
 
 test_format_feature proc
-    
-    ;;call ascii_print
-   
-    ;call ascii_code_print
-     
+
+    call ascii_print
+    call ascii_code_print
     call hex_print
-    
-    ;call bin_print
-    
-    ;call bad_code
+    call bin_print
+    call bad_code
+
     ret
 test_format_feature endp
 end

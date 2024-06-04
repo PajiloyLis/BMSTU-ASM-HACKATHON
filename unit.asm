@@ -1,6 +1,6 @@
 .model small
 
-.stack 300h
+.stack 200h
 
 extrn test_format_feature: near
 extrn test_get_feature: near
@@ -15,23 +15,24 @@ extrn print_string: near
 .code 
 .startup 
 
-    mov ah, 09h
-    lea dx, test_get
-    int 21h
+    ; mov ah, 09h
+    ; lea dx, test_get
+    ; int 21h
 
-    call test_get_feature
+    ; call test_get_feature
 
-    mov ah, 09h
-    lea dx, test_set
-    int 21h
+    ; mov ah, 09h
+    ; lea dx, test_set
+    ; int 21h
 
-    call test_set_feature
+    ; call test_set_feature
 
-    mov ah, 09h
-    lea dx, test_format
-    int 21h
+    ; mov ah, 09h
+    ; lea dx, test_format
+    ; int 21h
 
-    ; call test_format_feature
+    call test_format_feature
+
     mov ah, 4Ch
     int 21h
 end

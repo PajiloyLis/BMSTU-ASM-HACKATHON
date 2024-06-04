@@ -14,7 +14,7 @@ include BASE_STR.inc
 ; * @return ax Результат выполнения функции: EXIT_SUCCESS - успех, INDEX_OUT_OF_RANGE - ошибка: позиция вне диапазона
 ; * @author Талышева Олеся ИУ7-45Б
 ; */
-get proc uses dx
+get proc uses dx si
     mov si, dx
     mov ax, [si]
     cmp cx, ax

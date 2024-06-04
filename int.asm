@@ -10,18 +10,18 @@ public del
 
 .286
 .model small
-.stack 300h
 
 .data 
     buff db 100 dup(0), "$"
 
 .code
+    org 100h
     old21   label dword 
     old21ip dw 0
     old21cs dw 0
     str2 db "Hi$"
     cur dw 0
-    org 100h
+
 
 ;/**
 ; * @brief Обработчик перехваченного прерывания 21h по функции ah=02h
