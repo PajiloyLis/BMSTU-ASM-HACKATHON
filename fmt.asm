@@ -1,38 +1,41 @@
 .model small
 .stack 100h
-.386
-
-public format
 
 include BASE_STR.inc
 
-; Аргументы:
-; ds:dx – сегмент и смещение до структуры
-; bx – вариант форматного вывода 
-; 1 – выводит каждый байт в шестнадцатеричном формате.
-; 2 – выводит каждый байт в двоичном формате.
-; 3 – выводит байты как ASCII символы
-; 4 – вывод ASCII код символа
+public format
+
+extrn get: near
 
 .code
-
-format proc uses dx
-    mov si, dx
-    mov ax, bx
+;/**
+; * @brief Вывести содержимое структуры в различных форматах
+; * 
+; * @param ds:dx Сегмент и смещение до структуры
+; * @param bx Вариант форматного вывода:
+; *         - 1: вывод каждого байта в шестнадцатеричном формате
+; *         - 2: вывод каждого байта в двоичном формате
+; *         - 3: вывод байтов как ASCII символы
+; *         - 4: вывод ASCII кода символа
+; * @author Асадуллин Тагир ИУ7-44Б
+; */
+format proc uses ax cx di si dx
+    pushf
+    mov di, dx
+    mov si, [di]
     xor cx, cx
-    mov bx, [si + 2]
-    mov es, bx
-
-    cmp ax, 1
+    
+    cmp bx, 1
     je first
-    cmp ax, 2
+    cmp bx, 2
     je second
-    cmp ax, 3
+    cmp bx, 3
     je third
-    cmp ax, 4
+    cmp bx, 4
     je fourth
-
+    
     the_end:
+        popf
         ret   
 
 ; 1 – выводит каждый байт в шестнадцатеричном формате.
@@ -40,31 +43,35 @@ first:
     b1:
         mov ah, 02h
         mov bx, cx
-        
-        mov  al, es:[bx]      
-        cbw               
+        mov dx, di
+        call get
+        mov al, bl
+        cbw      
         mov  dl, 16
-        div  dl           
+        div  dl   
         add  ax, "00"
         mov  dx, ax
         mov  ah, 02h
         int  21h
         mov  dl, dh
+        mov ah, 02h
         int  21h
-
         mov dl, " "
+        mov ah, 02h
         int 21h
-
+        
         inc cx
-    cmp [si], cx
-    ja b1
+        cmp si, cx
+        ja b1
     jmp the_end
 
 ; 2 – выводит каждый байт в двоичном формате.
 second: 
     b2:
         mov bx, cx
-        mov dl, es:[bx]
+        mov dx, di
+        call get
+        mov dl, bl
 
         mov bh, 8
         mov bl, dl
@@ -83,24 +90,24 @@ second:
         int 21h
 
         inc cx
-    cmp [si], cx
-    ja b2
+        cmp si, cx
+        ja b2
     jmp the_end
 
 ; 3 – выводит байты как ASCII символы
 third: 
     b3:
+        mov dx, di
+        call get
+        mov dl, bl
         mov ah, 02h
-        mov bx, cx
-        mov dl, es:[bx]
         int 21h
-
         mov dl, " "
+        mov ah, 02h
         int 21h
-
         inc cx
-    cmp [si], cx
-    ja b3
+        cmp si, cx
+        ja b3
     jmp the_end
 
 ; 4 – вывод ASCII код (значения байта)
@@ -109,23 +116,29 @@ fourth:
         mov ah, 02h
         mov bx, cx
         
-        mov  al, es:[bx]      
+        mov dx, di
+        call get
+        mov al, bl  
+
         cbw               
         mov  dl, 10
         div  dl           
         add  ax, "00"
         mov  dx, ax
         mov  ah, 02h
+
         int  21h
         mov  dl, dh
+        mov ah, 02h
         int  21h
 
         mov dl, " "
+        mov ah, 02h
         int 21h
 
         inc cx
-    cmp [si], cx
-    jae b4
+        cmp si, cx
+        ja b4
     jmp the_end
 
 format endp
