@@ -14,22 +14,21 @@ extrn print_string: near
 
 .code 
 .startup 
+    mov ah, 09h
+    lea dx, test_get
+    int 21h
 
-    ; mov ah, 09h
-    ; lea dx, test_get
-    ; int 21h
+    call test_get_feature
 
-    ; call test_get_feature
+    mov ah, 09h
+    lea dx, test_set
+    int 21h
 
-    ; mov ah, 09h
-    ; lea dx, test_set
-    ; int 21h
+    call test_set_feature
 
-    ; call test_set_feature
-
-    ; mov ah, 09h
-    ; lea dx, test_format
-    ; int 21h
+    mov ah, 09h
+    lea dx, test_format
+    int 21h
 
     call test_format_feature
 

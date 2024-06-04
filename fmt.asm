@@ -19,7 +19,8 @@ extrn get: near
 ; *         - 4: вывод ASCII кода символа
 ; * @author Асадуллин Тагир ИУ7-44Б
 ; */
-format proc uses ax cx di si dx bx
+format proc uses ax cx di si dx
+    pushf
     mov di, dx
     mov si, [di]
     xor cx, cx
@@ -32,8 +33,9 @@ format proc uses ax cx di si dx bx
     je third
     cmp bx, 4
     je fourth
-
+    
     the_end:
+        popf
         ret   
 
 ; 1 – выводит каждый байт в шестнадцатеричном формате.

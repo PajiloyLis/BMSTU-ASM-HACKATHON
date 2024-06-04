@@ -10,6 +10,7 @@ public del
 
 .286
 .model small
+.stack 100h
 
 .data 
     buff db 100 dup(0), "$"
@@ -47,22 +48,24 @@ New21:
 
         jmp end2
 
-        old:
+    old:
         pop es
         pop ds
         popf
         popa
 
-    pushf
-    call cs:old21
+        pushf
+        call cs:old21
+    
         iret
 
-         end2:
-            pop es
-            pop ds
-            popf
-            popa
+    end2:
+        pop es
+        pop ds
+        popf
+        popa
         iret
+
 
 ;/**
 ; * @brief Процедура для установки перехвата
@@ -92,8 +95,8 @@ install proc
        mov      word ptr old21ip, bx
        mov      word ptr old21cs, es
 
-       mov      ax, 2521h
-       mov      dx, offset New21
+       mov      ax,2521h
+       mov      dx,offset New21
        int      21h
 
        pop ds
@@ -105,7 +108,7 @@ install endp
 ; */
 del proc
        push ds
-       lds      dx,old21 
+       lds      dx, old21 
        mov      ax, 2521h
        int      21h
        pop ds

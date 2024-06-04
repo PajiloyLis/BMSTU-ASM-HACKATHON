@@ -6,6 +6,7 @@
 
 .model small
 .stack 100h
+.286
 
 include BASE_STR.inc
 
@@ -40,6 +41,7 @@ test_size = 5
 
 .code
 ascii_print proc near uses ax bx cx dx si 
+    pushf
     mov ax, @data
     mov ds, ax
     xor cx, cx
@@ -52,21 +54,30 @@ ascii_print proc near uses ax bx cx dx si
 
     call fill_memory
 
-    ;call install
+    call install
     mov dx, offset test_1
     mov bx, 3
     call format
-    ;call del
+    call del
 
     lea si, expected_output_ascii
-    call perform_test 
-
+    call perform_test
     mov dx, offset test_1
     call free_mem
+
+    popf
     ret
+alloc_error:
+    call allocation_error_print
+    popf
+    ret
+
 ascii_print endp
 
-ascii_code_print proc near uses ax bx cx dx
+ascii_code_print proc near uses ax bx cx dx si 
+    pushf
+    mov ax, @data
+    mov ds, ax
     xor cx, cx
     mov cl, '2'
     call introduction_print
@@ -88,10 +99,18 @@ ascii_code_print proc near uses ax bx cx dx
 
     mov dx, offset test_1
     call free_mem
+    popf
+    ret
+alloc_error:
+    call allocation_error_print
+    popf
     ret
 ascii_code_print endp
 
-hex_print proc near uses ax bx cx dx
+hex_print proc near uses ax bx cx dx si 
+    pushf
+    mov ax, @data
+    mov ds, ax
     xor cx, cx
     mov cl, '3'
     call introduction_print
@@ -102,21 +121,27 @@ hex_print proc near uses ax bx cx dx
 
     call fill_memory
 
-    ; call install
+    call install
     mov dx, offset test_1
     mov bx, 1
     call format
-    ; call del
+    call del
 
     lea si, expected_output_hex
     call perform_test 
 
-    mov dx, offset test_1
-    call free_mem
+    popf
+    ret
+alloc_error:
+    call allocation_error_print
+    popf
     ret
 hex_print endp
 
-bin_print proc near uses ax bx cx dx
+bin_print proc near uses ax bx cx dx si 
+    pushf
+    mov ax, @data
+    mov ds, ax
     xor cx, cx
     mov cl, '4'
     call introduction_print
@@ -127,22 +152,27 @@ bin_print proc near uses ax bx cx dx
 
     call fill_memory
 
-    ; call install
+    call install
     mov dx, offset test_1
     mov bx, 2
     call format
-    ; call del
+    call del
 
     lea si, expected_output_bin
     call perform_test 
 
     mov dx, offset test_1
     call free_mem
+    popf
+    ret
+alloc_error:
+    call allocation_error_print
+    popf
     ret
 bin_print endp
 
-
-bad_code proc near uses ax bx cx dx
+bad_code proc near uses ax bx cx dx si 
+    pushf
     mov ax, @data
     mov ds, ax
     xor cx, cx
@@ -161,6 +191,11 @@ bad_code proc near uses ax bx cx dx
 
     mov dx, offset test_1
     call free_mem
+    popf
+    ret
+alloc_error:
+    call allocation_error_print
+    popf
     ret
 bad_code endp
 
@@ -170,11 +205,6 @@ allocate_memory proc near
     call alloc_mem
     ret
 allocate_memory endp
-
-alloc_error proc near
-    call allocation_error_print
-    ret
-alloc_error endp
 
 fill_memory proc near
     mov ax, 0
@@ -190,7 +220,7 @@ fill_memory proc near
     ret
 fill_memory endp
 
-perform_test proc near uses cx bx si
+perform_test proc near uses cx bx si dx ax
     mov cx, 0
     compare_loop:
         mov bx, cx
@@ -214,9 +244,11 @@ test_ok:
     jmp test_end
 
 test_end:
+    
     ret
 perform_test endp
 
+; RIP 24 часа моего времени чтобы понять почему все это ломается // починилось
 test_format_feature proc
 
     call ascii_print
