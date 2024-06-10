@@ -4,18 +4,18 @@
 include BASE_STR.inc
 
 .data
-newline db 13, 10, '$'
-length_str db 'Длина: $'
-array_str db 'Массив: $'
-space db ' $'
 vector1 vector <>
-
-print_vector proc
-
-print_vector endp
 
 
 .code
+;/**
+; * @brief Заполнить массив псевдослучайными числами
+; * 
+; * @param cx длинна массива
+; * @return заполненный массив
+; */
+
+
 extern alloc_mem: proc
 extern set: proc
 extern get: proc
@@ -29,14 +29,12 @@ main proc
 
     ; Выделим память под структуру vector
     lea dx, vector1
-    mov cx, 15
     call alloc_mem
     cmp ax, EXIT_SUCCESS
     jne alloc_fail
 
     ; Заполним массив псевдослучайными числами
     lea dx, vector1
-    mov cx, 10         ; 
     mov di, 0          ; 
 
 fill_loop:
@@ -57,11 +55,9 @@ fill_loop:
     jne set_fail
 
     inc di              ; Переходим к следующему индексу
-    cmp di, 10          ; Проверяем, заполнили ли весь массив
+    cmp di, сx          ; Проверяем, заполнили ли весь массив
     jl fill_loop
 
-    ; Печатаем массив
-    
 
     ; Завершение программы
     call free_mem
