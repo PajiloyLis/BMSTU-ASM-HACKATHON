@@ -6,67 +6,56 @@ include BASE_STR.inc
 .data
 vector1 vector <>
 
-
 .code
-;/**
-; * @brief Заполнить массив псевдослучайными числами
-; * 
-; * @param cx длинна массива
-; * @return заполненный массив
-; */
 
-
-extern alloc_mem: proc
+; Экспортируемые процедуры
 extern set: proc
 extern get: proc
-extern free_mem: proc
 
+;**
+; * @brief Заполнить массив псевдослучайными числами
+; * 
+; * @param ds:dx сегмент и смещение до структуры
+; * @param ax Результат выполнения функции: EXIT_SUCCESS - успех
+; * @return заполненный массив
+; */
 main proc
     ; Установим сегментные регистры
     mov ax, @data
     mov ds, ax
     mov es, ax
 
-    ; Выделим память под структуру vector
+    ; заполнение
     lea dx, vector1
-    call alloc_mem
-    cmp ax, EXIT_SUCCESS
-    jne alloc_fail
-
-    ; Заполним массив псевдослучайными числами
-    lea dx, vector1
-    mov di, 0          ; 
+    mov si, dx        ; si указывает на начало структуры
+    mov ax, [si]      ; получить длину массива в ax
+    mov cx, ax        ; сохранить длину массива в cx
+    mov di, 0         ; индекс массива
 
 fill_loop:
     ; Генерация псевдослучайного числа
     mov ah, 2Ch
     int 21h
-    mov bl, dl          ; Сохраняем случайное число в bl
+    mov bl, dl        
 
-    ; Устанавливаем значение в массиве
-    push cx             ; Сохраняем cx
-    push dx             ; Сохраняем dx
-    mov cx, di          
+    ; установка значения
+    push cx           
+    push dx          
+    mov cx, di       
     call set
-    pop dx              ; Восстанавливаем dx
-    pop cx              ; Восстанавливаем cx
+    pop dx            
+    pop cx            
 
     cmp ax, EXIT_SUCCESS
     jne set_fail
 
-    inc di              ; Переходим к следующему индексу
-    cmp di, сx          ; Проверяем, заполнили ли весь массив
+    inc di            ; Переходим к следующему индексу
+    cmp di, cx        ; Проверяем, заполнен ли весь массив
     jl fill_loop
 
-
     ; Завершение программы
-    call free_mem
+    lea dx, vector1
     mov ax, 4C00h
-    int 21h
-
-alloc_fail:
-    ; Обработка ошибки выделения памяти
-    mov ax, 4C01h
     int 21h
 
 set_fail:
